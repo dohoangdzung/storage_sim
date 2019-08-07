@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE platform SYSTEM "http://simgrid.gforge.inria.fr/simgrid/simgrid.dtd">
+<platform version="4.1">
+    <zone id="AS0" routing="Full">
+
+        <storage_type id="single_SSD" size="400GB">
+            <model_prop id="Bwrite" value="120MBps" />
+            <model_prop id="Bread" value="180MBps" />
+        </storage_type>
+
+        <storage id="Disk1" typeId="single_SSD" attach="Host1" />
+
+        <host id="Host1" speed="6.7Gf" core="4">
+            <prop id="memory" value="16000000000"/>
+            <mount storageId="Disk1" name="/"/>
+        </host>
+
+<!--        <host id="Host2" speed="6.7Gf" core="4">-->
+<!--            <prop id="memory" value="16000000000"/>-->
+<!--        </host>-->
+
+<!--        <link id="1" bandwidth="1250MBps" latency="0us"/>-->
+<!--        <route src="Host1" dst="Host2">-->
+<!--            <link_ctn id="1"/>-->
+<!--        </route>-->
+    </zone>
+</platform>

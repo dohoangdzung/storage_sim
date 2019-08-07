@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Cortext Depth Estimation Neuroimaging workflow -->
+<adag name="cortexdepthest" jobCount="5" fileCount="0" childCount="6">
+	<job id="skullstripping1" namespace="cortexdepthest" name="skullstripping" cores="1">
+		<uses file="sub001_sess1_INV2.nii.gz" link="input" size="24100"/>
+		<uses file="sub001_sess1_T1map.nii.gz" link="input" size="42000"/>
+		<uses file="sub001_sess1_T1w.nii.gz" link="input" size="45200"/>
+		<uses file="sub001_sess1_strip-inv2.nii.gz" link="output" size="7890"/>
+		<uses file="sub001_sess1_strip-mask.nii.gz" link="output" size="709"/>
+		<uses file="sub001_sess1_strip-t1map.nii.gz" link="output" size="10800"/>
+		<uses file="sub001_sess1_strip-t1w.nii.gz" link="output" size="11400"/>
+	</job>
+	<job id="mgdmsegment1" namespace="cortexdepthest" name="mgdmsegment" runtime="100" cores="1">
+		<uses file="sub001_sess1_strip-t1map.nii.gz" link="input" size="10800"/>
+        <uses file="sub001_sess1_strip-t1w.nii.gz" link="input" size="11400"/>
+		<uses file="sub001_sess1_mgdm-dist.nii.gz" link="output" size="24100"/>
+        <uses file="sub001_sess1_mgdm-lbls.nii.gz" link="output" size="22700"/>
+        <uses file="sub001_sess1_mgdm-mems.nii.gz" link="output" size="129"/>
+        <uses file="sub001_sess1_mgdm-seg.nii.gz" link="output" size="1940"/>
+	</job>
+	<job id="cortex1" namespace="cortexdepthest" name="cortex" runtime="200" cores="1">
+        <uses file="sub001_sess1_mgdm-dist.nii.gz" link="input" size="24100"/>
+        <uses file="sub001_sess1_mgdm-lbls.nii.gz" link="input" size="22700"/>
+        <uses file="sub001_sess1_mgdm-mems.nii.gz" link="input" size="129"/>
+        <uses file="sub001_sess1_mgdm-seg.nii.gz" link="input" size="1940"/>
+		<uses file="sub001_sess1_left_cerebrum_xmask-lcrbg.nii.gz" link="output" size="746"/>
+		<uses file="sub001_sess1_left_cerebrum_xmask-lcrgm.nii.gz" link="output" size="842"/>
+		<uses file="sub001_sess1_left_cerebrum_xmask-lcrwm.nii.gz" link="output" size="639"/>
+        <uses file="sub001_sess1_left_cerebrum_xproba-lcrbg.nii.gz" link="output" size="22800"/>
+        <uses file="sub001_sess1_left_cerebrum_xproba-lcrgm.nii.gz" link="output" size="12300"/>
+        <uses file="sub001_sess1_left_cerebrum_xproba-lcrwm.nii.gz" link="output" size="12"/>
+        <uses file="sub001_sess1_left_cerebrum_xlvl-lcrbg.nii.gz" link="output" size="24500"/>
+        <uses file="sub001_sess1_left_cerebrum_xlvl-lcrgm.nii.gz" link="output" size="24500"/>
+        <uses file="sub001_sess1_left_cerebrum_xlvl-lcrwm.nii.gz" link="output" size="24300"/>
+	</job>
+	<job id="cruise1" namespace="cortexdepthest" name="cruise" runtime="300" cores="1">
+		<uses file="sub001_sess1_left_cerebrum_xmask-lcrwm.nii.gz" link="input" size="639"/>
+        <uses file="sub001_sess1_left_cerebrum_xproba-lcrbg.nii.gz" link="input" size="22800"/>
+        <uses file="sub001_sess1_left_cerebrum_xproba-lcrgm.nii.gz" link="input" size="12300"/>
+        <uses file="sub001_sess1_left_cerebrum_xproba-lcrwm.nii.gz" link="input" size="12"/>
+		<uses file="sub001_sess1_left_cerebrum_cruise-avg.nii.gz" link="output" size="8440"/>
+		<uses file="sub001_sess1_left_cerebrum_cruise-cgb.nii.gz" link="output" size="83400"/>
+		<uses file="sub001_sess1_left_cerebrum_cruise-cortex.nii.gz" link="output" size="993"/>
+		<uses file="sub001_sess1_left_cerebrum_cruise-gwb.nii.gz" link="output" size="83100"/>
+		<uses file="sub001_sess1_left_cerebrum_cruise-pcsf.nii.gz" link="output" size="23"/>
+		<uses file="sub001_sess1_left_cerebrum_cruise-pgm.nii.gz" link="output" size="23700"/>
+		<uses file="sub001_sess1_left_cerebrum_cruise-pwm.nii.gz" link="output" size="24900"/>
+		<uses file="sub001_sess1_left_cerebrum_cruise-thick.nii.gz" link="output" size="3590"/>
+	</job>
+	<job id="layering1" namespace="cortexdepthest" name="layering" runtime="300" cores="1">
+		<uses file="sub001_sess1_left_cerebrum_cruise-gwb.nii.gz" link="input" size="83100"/>
+		<uses file="sub001_sess1_left_cerebrum_cruise-cgb.nii.gz" link="input" size="83400"/>
+
+		<uses file="sub001_sess1_left_cerebrum_layering-boundaries.nii.gz" link="output" size="416"/>
+		<uses file="sub001_sess1_left_cerebrum_layering-depth.nii.gz" link="output" size="3680"/>
+		<uses file="sub001_sess1_left_cerebrum_layering-layers.nii.gz" link="output" size="1320"/>
+	</job>
+
+	<child ref="mgdmsegment1">
+		<parent ref="skullstripping1"/>
+	</child>
+	<child ref="cortex1">
+		<parent ref="mgdmsegment1"/>
+	</child>
+	<child ref="cruise1">
+		<parent ref="cortex1"/>
+	</child>
+	<child ref="layering1">
+		<parent ref="cruise1"/>
+	</child>
+
+    <!-- ==========JOB 2=========== -->
+	<job id="skullstripping2" namespace="cortexdepthest" name="skullstripping" runtime="250" cores="1">
+    		<uses file="sub001_sess2_INV2.nii.gz" link="input" size="24100"/>
+    		<uses file="sub001_sess2_T1map.nii.gz" link="input" size="42000"/>
+    		<uses file="sub001_sess2_T1w.nii.gz" link="input" size="45200"/>
+    		<uses file="sub001_sess2_strip-inv2.nii.gz" link="output" size="7890"/>
+    		<uses file="sub001_sess2_strip-mask.nii.gz" link="output" size="709"/>
+    		<uses file="sub001_sess2_strip-t1map.nii.gz" link="output" size="10800"/>
+    		<uses file="sub001_sess2_strip-t1w.nii.gz" link="output" size="11400"/>
+    	</job>
+    	<job id="mgdmsegment2" namespace="cortexdepthest" name="mgdmsegment" runtime="350" cores="1">
+    		<uses file="sub001_sess2_strip-t1map.nii.gz" link="input" size="10800"/>
+            <uses file="sub001_sess2_strip-t1w.nii.gz" link="input" size="11400"/>
+    		<uses file="sub001_sess2_mgdm-dist.nii.gz" link="output" size="24100"/>
+            <uses file="sub001_sess2_mgdm-lbls.nii.gz" link="output" size="22700"/>
+            <uses file="sub001_sess2_mgdm-mems.nii.gz" link="output" size="129"/>
+            <uses file="sub001_sess2_mgdm-seg.nii.gz" link="output" size="1940"/>
+    	</job>
+    	<job id="cortex2" namespace="cortexdepthest" name="cortex" runtime="350" cores="1">
+            <uses file="sub001_sess2_mgdm-dist.nii.gz" link="input" size="24100"/>
+            <uses file="sub001_sess2_mgdm-lbls.nii.gz" link="input" size="22700"/>
+            <uses file="sub001_sess2_mgdm-mems.nii.gz" link="input" size="129"/>
+            <uses file="sub001_sess2_mgdm-seg.nii.gz" link="input" size="1940"/>
+    		<uses file="sub001_sess2_left_cerebrum_xmask-lcrbg.nii.gz" link="output" size="746"/>
+    		<uses file="sub001_sess2_left_cerebrum_xmask-lcrgm.nii.gz" link="output" size="842"/>
+    		<uses file="sub001_sess2_left_cerebrum_xmask-lcrwm.nii.gz" link="output" size="639"/>
+            <uses file="sub001_sess2_left_cerebrum_xproba-lcrbg.nii.gz" link="output" size="22800"/>
+            <uses file="sub001_sess2_left_cerebrum_xproba-lcrgm.nii.gz" link="output" size="12300"/>
+            <uses file="sub001_sess2_left_cerebrum_xproba-lcrwm.nii.gz" link="output" size="12"/>
+            <uses file="sub001_sess2_left_cerebrum_xlvl-lcrbg.nii.gz" link="output" size="24500"/>
+            <uses file="sub001_sess2_left_cerebrum_xlvl-lcrgm.nii.gz" link="output" size="24500"/>
+            <uses file="sub001_sess2_left_cerebrum_xlvl-lcrwm.nii.gz" link="output" size="24300"/>
+    	</job>
+    	<job id="cruise2" namespace="cortexdepthest" name="cruise" runtime="550" cores="1">
+    		<uses file="sub001_sess2_left_cerebrum_xmask-lcrwm.nii.gz" link="input" size="639"/>
+            <uses file="sub001_sess2_left_cerebrum_xproba-lcrbg.nii.gz" link="input" size="22800"/>
+            <uses file="sub001_sess2_left_cerebrum_xproba-lcrgm.nii.gz" link="input" size="12300"/>
+            <uses file="sub001_sess2_left_cerebrum_xproba-lcrwm.nii.gz" link="input" size="12"/>
+    		<uses file="sub001_sess2_left_cerebrum_cruise-avg.nii.gz" link="output" size="8440"/>
+    		<uses file="sub001_sess2_left_cerebrum_cruise-cgb.nii.gz" link="output" size="83400"/>
+    		<uses file="sub001_sess2_left_cerebrum_cruise-cortex.nii.gz" link="output" size="993"/>
+    		<uses file="sub001_sess2_left_cerebrum_cruise-gwb.nii.gz" link="output" size="83100"/>
+    		<uses file="sub001_sess2_left_cerebrum_cruise-pcsf.nii.gz" link="output" size="23"/>
+    		<uses file="sub001_sess2_left_cerebrum_cruise-pgm.nii.gz" link="output" size="23700"/>
+    		<uses file="sub001_sess2_left_cerebrum_cruise-pwm.nii.gz" link="output" size="24900"/>
+    		<uses file="sub001_sess2_left_cerebrum_cruise-thick.nii.gz" link="output" size="3590"/>
+    	</job>
+    	<job id="layering2" namespace="cortexdepthest" name="layering" runtime="550" cores="1">
+    		<uses file="sub001_sess2_left_cerebrum_cruise-gwb.nii.gz" link="input" size="83100"/>
+    		<uses file="sub001_sess2_left_cerebrum_cruise-cgb.nii.gz" link="input" size="83400"/>
+
+    		<uses file="sub001_sess2_left_cerebrum_layering-boundaries.nii.gz" link="output" size="416"/>
+    		<uses file="sub001_sess2_left_cerebrum_layering-depth.nii.gz" link="output" size="3680"/>
+    		<uses file="sub001_sess2_left_cerebrum_layering-layers.nii.gz" link="output" size="1320"/>
+    	</job>
+
+    	<child ref="mgdmsegment2">
+    		<parent ref="skullstripping2"/>
+    	</child>
+    	<child ref="cortex2">
+    		<parent ref="mgdmsegment2"/>
+    	</child>
+    	<child ref="cruise2">
+    		<parent ref="cortex2"/>
+    	</child>
+    	<child ref="layering2">
+    		<parent ref="cruise2"/>
+    	</child>
+
+</adag>

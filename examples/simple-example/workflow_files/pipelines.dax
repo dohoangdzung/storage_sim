@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Cortext Depth Estimation Neuroimaging workflow -->
+<adag name="pipeline">
+<!--    <job id="task3-35f5ce3277fd97d9006fcd0664c24f0b" namespace="pipeline" flop="0f" memory="5971MB" name="task3-35f5ce3277fd97d9006fcd0664c24f0b">-->
+<!--        <uses file="sub_2.nii.gz" link="input" size="6009892187"/>-->
+<!--        <uses file="sub_3.nii.gz" link="output" size="6009892187"/>-->
+<!--        <uses file="sub_3_temp.nii.gz" link="output" size="6009892187"/>-->
+<!--    </job>-->
+
+<!--    <job id="task2-5cb457654a102b1708261016926728d4" namespace="pipeline" flop="0f" memory="5971MB" name="task2-5cb457654a102b1708261016926728d4">-->
+<!--        <uses file="sub_1.nii.gz" link="input" size="6009892187"/>-->
+<!--        <uses file="sub_2.nii.gz" link="output" size="6009892187"/>-->
+<!--        <uses file="sub_2_temp.nii.gz" link="output" size="6009892187"/>-->
+<!--    </job>-->
+
+    <job id="task1-0c3e495329cb96904b0f05c62eff86c1" namespace="pipeline" flop="0f" memory="5971MB" name="task1-0c3e495329cb96904b0f05c62eff86c1">
+        <uses file="sub.nii.gz" link="input" size="6009892187 "/>
+        <uses file="sub_1.nii.gz" link="output" size="6009892187"/>
+<!--        <uses file="sub_1_temp.nii.gz" link="output" size="6009892187"/>-->
+    </job>
+
+<!--    <child ref="task3-35f5ce3277fd97d9006fcd0664c24f0b">-->
+<!--        <parent ref="task2-5cb457654a102b1708261016926728d4"/>-->
+<!--    </child>-->
+<!--    <child ref="task2-5cb457654a102b1708261016926728d4">-->
+<!--        <parent ref="task1-0c3e495329cb96904b0f05c62eff86c1"/>-->
+<!--    </child>-->
+</adag>

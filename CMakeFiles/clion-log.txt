@@ -1,0 +1,13 @@
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE= -G "CodeBlocks - Unix Makefiles" /Users/dzung/Documents/Concordia/workspace/wrench-1.4
+-- Cmake version 3.14.3
+-- The CXX compiler identification is AppleClang 10.0.1.10010046
+-- Check for working CXX compiler: /Library/Developer/CommandLineTools/usr/bin/c++
+-- Check for working CXX compiler: /Library/Developer/CommandLineTools/usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Building WRENCH Version: 1.4
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/dzung/Documents/Concordia/workspace/wrench-1.4

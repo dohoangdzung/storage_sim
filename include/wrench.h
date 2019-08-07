@@ -1,0 +1,51 @@
+/**
+ * Copyright (c) 2017-2018. The WRENCH Team.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ */
+
+#ifndef WRENCH_WRENCH_H
+#define WRENCH_WRENCH_H
+
+#include "wrench/simulation/Simulation.h"
+#include "wrench/workflow/Workflow.h"
+
+// Services and Service Properties
+#include "wrench/services/compute/bare_metal/BareMetalComputeService.h"
+#include "wrench/services/compute/bare_metal/BareMetalComputeServiceProperty.h"
+#include "wrench/services/storage/simple/SimpleStorageService.h"
+#include "wrench/services/storage/simple/SimpleStorageServiceProperty.h"
+#include "wrench/services/file_registry/FileRegistryService.h"
+#include "wrench/services/file_registry/FileRegistryServiceProperty.h"
+#include "wrench/services/compute/virtualized_cluster/VirtualizedClusterService.h"
+#include "wrench/services/compute/virtualized_cluster/VirtualizedClusterServiceProperty.h"
+#include "wrench/services/compute/cloud/CloudService.h"
+#include "wrench/services/compute/cloud/CloudServiceProperty.h"
+#include "wrench/services/compute/batch/BatchService.h"
+#include "wrench/services/compute/batch/BatchServiceProperty.h"
+#include "wrench/services/compute/htcondor/HTCondorService.h"
+#include "wrench/services/compute/htcondor/HTCondorServiceProperty.h"
+#include "wrench/services/network_proximity/NetworkProximityService.h"
+#include "wrench/services/network_proximity/NetworkProximityServiceProperty.h"
+
+// WMS Implementations
+#include "wrench/wms/WMS.h"
+
+// Scheduler
+#include "wrench/wms/scheduler/StandardJobScheduler.h"
+#include "wrench/wms/scheduler/PilotJobScheduler.h"
+
+// Scheduling Optimizations
+#include "wrench/wms/StaticOptimization.h"
+#include "wrench/wms/DynamicOptimization.h"
+
+// Simulation Output Analysis
+#include "wrench/simulation/SimulationTimestamp.h"
+#include "wrench/simulation/SimulationTimestampTypes.h"
+
+
+
+#endif //WRENCH_WRENCH_H
